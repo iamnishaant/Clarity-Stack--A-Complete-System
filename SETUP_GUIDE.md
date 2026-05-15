@@ -33,23 +33,110 @@ To simplify local deployment, use the provided batch scripts:
 ---
 
 ## 3. Manual Installation
-### Python Services (8000, 8001, 8002, 8005)
-Each Python service requires a local virtual environment (`venv`).
-1. Navigate to the service directory.
-2. Run `python -m venv venv`.
-3. Activate: `venv\Scripts\activate`.
-4. Install: `pip install -r requirements.txt`.
 
-### Node.js Services (8003, 8004, 8006, 8007)
-1. Navigate to the service directory.
-2. Run `npm install`.
+### 🐍 Python Backend Services (Ports: 8000, 8001, 8002, 8005)
+Each Python service requires a local virtual environment (`venv`) and its specific requirements file.
+
+1.  **Core Backend (8000)**
+    - **Directory:** `/Backend`
+    - **Install:** `pip install -r requirements_backend.txt`
+2.  **SRS Intelligence (8001)**
+    - **Directory:** `/SRS_Service`
+    - **Install:** `pip install -r requirements_srs.txt`
+3.  **ThreatLens AI (8002)**
+    - **Directory:** `/ThreatLens_Service`
+    - **Install:** `pip install -r requirements_threatlens.txt`
+4.  **UML Generation API (8005)**
+    - **Directory:** `/UML_Clarity_Service/backend`
+    - **Install:** `pip install -r requirements_uml_backend.txt`
+
+**Standard Python Workflow:**
+```powershell
+cd <service_directory>
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements_xxx.txt
+```
+
+### 📦 Node.js & Frontend Services (Ports: 8003, 8004, 8006, 8007)
+These services require `Node.js` and `npm`. Run `npm install` in each directory.
+
+1.  **Knowledge Satellite (8003)**
+    - **Directory:** `/Satellite`
+    - **Deps List:** `requirements_satellite.txt`
+2.  **Collaborative Editor (8004)**
+    - **Directory:** `/Editor_Service`
+    - **Deps List:** `requirements_editor.txt`
+3.  **Main Dashboard (8006) [_frontend]**
+    - **Directory:** `/Web/Frontend`
+    - **Deps List:** `requirements_frontend.txt`
+4.  **UML Visualizer (8007) [_uml_ui]**
+    - **Directory:** `/UML_Clarity_Service`
+    - **Deps List:** `requirements_uml_ui.txt`
+
+**Standard Node Workflow:**
+```powershell
+cd <service_directory>
+npm install
+```
 
 ---
 
 ## 4. Environment Configuration
-Ensure `.env` files are present in all service roots.
-- **Satellite:** Requires `MONGO_URI` and `GROQ_API_KEY`.
-- **Frontend:** Requires `VITE_SATELLITE_URL` (default: `http://localhost:8003`).
+Ensure `.env` files are present in all service roots with the following keys:
+
+### 🐍 Python Services
+
+**1. Core Backend (`/Backend/.env`)**
+- `SECRET_KEY`: Security salt for JWTs.
+- `ALGORITHM`: `HS256`
+- `DATABASE_URL`: `sqlite:///./claritystack.db`
+- `GROQ_API_KEY`: Required for Mixtral/Llama inference.
+- `NVIDIA_API_KEY`: Required for NVIDIA NIM microservices.
+- `HF_ACCESS_TOKEN`: Required for HuggingFace model access.
+
+**2. SRS Intelligence (`/SRS_Service/.env`)**
+- `HF_TOKEN`: HuggingFace token for sentence-transformers.
+- `MODEL_PATH`: `sentence-transformers/all-MiniLM-L6-v2`
+- `NVIDIA_API_KEY`: Required for advanced SRS validation.
+- `PORT`: `8001`
+
+**3. ThreatLens AI (`/ThreatLens_Service/.env`)**
+- `GOOGLE_SAFE_BROWSING_API_KEY`: For real-time URL reputation checks.
+- `PORT`: `8002`
+
+**4. UML Generation API (`/UML_Clarity_Service/.env`)**
+- `NVIDIA_API_KEY`: Powers the UML-to-Code and Code-to-UML logic.
+- `VITE_API_URL`: `http://localhost:8005`
+- `PORT`: `8005`
+
+### 📦 Node.js & Frontend Services
+
+**5. Knowledge Satellite (`/Satellite/.env`)**
+- `MONGO_URI`: MongoDB Atlas connection string.
+- `JWT_SECRET`: Must match the Backend's secret key.
+- `GROQ_API_KEY` / `NVIDIA_API_KEY` / `HF_TOKEN`: API credentials for satellite inference.
+- `SUPABASE_URL` / `SUPABASE_KEY`: For real-time collaborative storage.
+- `SMTP_USER` / `SMTP_PASS`: For email notifications (e.g., via Gmail).
+- `PORT`: `8003`
+
+**6. Collaborative Editor (`/Editor_Service/.env`)**
+- `SUPABASE_URL` / `SUPABASE_KEY`: Required for document synchronization.
+- `SECRET_KEY`: Security salt for socket sessions.
+- `PORT`: `8004`
+
+**7. Main Dashboard [_frontend] (`/Web/Frontend/.env`)**
+- `VITE_API_BASE_URL`: `http://localhost:8000`
+- `VITE_SRS_API_URL`: `http://localhost:8001`
+- `VITE_THREATLENS_URL`: `http://localhost:8002`
+- `VITE_SATELLITE_URL`: `http://localhost:8003`
+- `VITE_EDITOR_BACKEND_URL`: `http://localhost:8004`
+- `VITE_UML_API_URL`: `http://localhost:8005`
+
+**8. UML Visualizer [_uml_ui] (`/UML_Clarity_Service/.env`)**
+- `VITE_NVIDIA_API_KEY`: Same as UML API.
+- `VITE_API_URL`: `http://localhost:8005`
+- `PORT`: `8007`
 
 ---
 
