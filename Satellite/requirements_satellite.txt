@@ -1,0 +1,10 @@
+axios
+cors
+dotenv
+express
+jsonwebtoken
+mongoose
+node-cron
+nodemailer
+uuid
+nodemon (dev)

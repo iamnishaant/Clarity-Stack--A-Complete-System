@@ -1,0 +1,7 @@
+@supabase/supabase-js
+cors
+dotenv
+express
+jsonwebtoken
+socket.io
+uuid

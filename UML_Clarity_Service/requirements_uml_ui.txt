@@ -1,0 +1,10 @@
+@tailwindcss/vite
+backbone
+jointjs
+jquery
+lodash
+lucide-react
+react
+react-dom
+tailwindcss
+vite (dev)
