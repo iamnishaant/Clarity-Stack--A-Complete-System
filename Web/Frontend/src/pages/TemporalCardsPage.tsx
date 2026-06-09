@@ -298,10 +298,10 @@ export default function TemporalCardsPage() {
               variant="outline"
               size="sm"
               onClick={() => handleGenerateByLabel(activeLabel)}
-              disabled={!!generating}
+              disabled={isGenerating(`gen-${activeLabel}`)}
               className="border-dashed"
             >
-              {generating === activeLabel ? (
+              {isGenerating(`gen-${activeLabel}`) ? (
                 <LoadingSpinner size="sm" className="mr-2" />
               ) : (
                 <Brain className="w-4 h-4 mr-2 text-neon-violet" />

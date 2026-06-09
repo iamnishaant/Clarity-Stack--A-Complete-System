@@ -14,7 +14,7 @@
  *   - Class:     standard.Rectangle
  */
 
-const BACKEND_URL  = 'http://localhost:8006';
+const BACKEND_URL  = import.meta.env.VITE_API_URL || 'http://localhost:8005';
 const NVIDIA_API_KEY = import.meta.env?.VITE_NVIDIA_API_KEY || '';
 
 const NVIDIA_MODELS = [

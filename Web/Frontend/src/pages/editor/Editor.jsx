@@ -9,8 +9,8 @@ function Editor() {
     const startSession = async () => {
         setLoading(true);
         try {
-            // Connect to the same host but on port 8000
-            const baseUrl = `http://${window.location.hostname}:8003`;
+            // Collaborative Editor backend (port 8004)
+            const baseUrl = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8004`;
             const res = await fetch(`${baseUrl}/workspace`, {
                 method: "POST",
             });

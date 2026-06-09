@@ -27,7 +27,7 @@ function Workspace() {
 
     useEffect(() => {
         const fetchWorkspaceMeta = async () => {
-            const baseUrl = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8003`;
+            const baseUrl = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8004`;
             const res = await fetch(`${baseUrl}/workspace/${id}`, {
                 headers: { Authorization: `Bearer ${session?.access_token}` },
             });
@@ -42,7 +42,7 @@ function Workspace() {
     const fetchActivityLogs = useCallback(async () => {
         if (!session?.access_token) return;
         try {
-            const baseUrl = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:8003`;
+            const baseUrl = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8004`;
             const res = await fetch(`${baseUrl}/activity/${id}`, {
                 headers: { Authorization: `Bearer ${session.access_token}` },
             });
@@ -100,7 +100,7 @@ function Workspace() {
     const logActivity = async (action, content, cursorPosition = 0) => {
         if (!session?.access_token) return;
         try {
-            const baseUrl = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:8003`;
+            const baseUrl = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8004`;
             await fetch(`${baseUrl}/activity`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${session.access_token}` },
@@ -159,7 +159,7 @@ function Workspace() {
     const createSnapshot = async () => {
         const content = sections.map((s) => `=== ${s.title} ===\n${s.content}`).join("\n\n");
         try {
-            const baseUrl = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:8003`;
+            const baseUrl = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8004`;
             const res = await fetch(`${baseUrl}/snapshot`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -176,7 +176,7 @@ function Workspace() {
 
     const createSectionSnapshot = async (section) => {
         try {
-            const baseUrl = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:8003`;
+            const baseUrl = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8004`;
             const res = await fetch(`${baseUrl}/snapshot`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

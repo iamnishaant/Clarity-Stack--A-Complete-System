@@ -12,8 +12,8 @@ wt -w 0 ^
   nt --title "1. Backend" -d "%ROOT_DIR%\Backend" cmd /k "title 1. Backend && venv\Scripts\python.exe -m uvicorn main:app --reload --port 8000" ; ^
   nt --title "2. SRS" -d "%ROOT_DIR%\SRS_Service" cmd /k "title 2. SRS && venv\Scripts\python.exe -m uvicorn api:app --reload --port 8001" ; ^
   nt --title "3. Threat" -d "%ROOT_DIR%\ThreatLens_Service" cmd /k "title 3. Threat && venv\Scripts\python.exe -m uvicorn app:app --reload --port 8002" ; ^
-  nt --title "4. Sat" -d "%ROOT_DIR%\Satellite" cmd /k "title 4. Sat && npm run dev -- --port 8003" ; ^
-  nt --title "5. Edit" -d "%ROOT_DIR%\Editor_Service" cmd /k "title 5. Edit && npm start -- --port 8004" ; ^
+  nt --title "4. Sat" -d "%ROOT_DIR%\Satellite" cmd /k "title 4. Sat && set PORT=8003 && npm run dev" ; ^
+  nt --title "5. Edit" -d "%ROOT_DIR%\Editor_Service" cmd /k "title 5. Edit && set PORT=8004 && npm start" ; ^
   nt --title "6. UI" -d "%ROOT_DIR%\Web\Frontend" cmd /k "title 6. UI && npm run dev -- --port 8006" ; ^
   nt --title "7. UML API" -d "%ROOT_DIR%\UML_Clarity_Service\backend" cmd /k "title 7. UML API && venv\Scripts\python.exe -m uvicorn main:app --reload --port 8005" ; ^
   nt --title "8. UML UI" -d "%ROOT_DIR%\UML_Clarity_Service" cmd /k "title 8. UML UI && npm run dev -- --port 8007" ; ^

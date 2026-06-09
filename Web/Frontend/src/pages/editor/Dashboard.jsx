@@ -49,7 +49,7 @@ export default function Dashboard() {
         setLoading(true);
         try {
             const { data: { session: s } } = await supabase.auth.getSession();
-            const base = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:8003`;
+            const base = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8004`;
             const res  = await fetch(`${base}/workspaces`, { headers: { Authorization: `Bearer ${s?.access_token}` } });
             if (res.ok) setWorkspaces(await res.json());
         } catch (e) { console.error(e); }
@@ -60,7 +60,7 @@ export default function Dashboard() {
         e.preventDefault();
         if (!window.confirm("Permanently delete this workspace?")) return;
         const { data: { session: s } } = await supabase.auth.getSession();
-        const base = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:8003`;
+        const base = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8004`;
         const res  = await fetch(`${base}/workspace/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${s?.access_token}` } });
         if (res.ok) setWorkspaces((p) => p.filter((w) => w.id !== id));
     };
@@ -73,7 +73,15 @@ export default function Dashboard() {
         <div style={s.page}>
             {/* ── Navbar ─────────────────────────────────────────────────── */}
             <nav style={s.nav}>
-                <span style={s.brand}>Clarity</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                    <button
+                        onClick={() => navigate('/projects')}
+                        style={{ display: "flex", alignItems: "center", gap: "6px", background: "transparent", border: "1px solid #334155", color: "#cbd5e1", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: 600, cursor: "pointer" }}
+                    >
+                        ← Back to Projects
+                    </button>
+                    <span style={s.brand}>Clarity</span>
+                </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
                     <span style={s.navOnline}><span style={{ color: "#22c55e", marginRight: "6px" }}>●</span>Online</span>
                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -170,7 +178,7 @@ function NewWorkspaceModal({ session, onClose, onCreated }) {
         setCreating(true);
         try {
             const { data: { session: s } } = await supabase.auth.getSession();
-            const base = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:8003`;
+            const base = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8004`;
             const res  = await fetch(`${base}/workspace`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${s?.access_token}` },

@@ -10,7 +10,7 @@ function Snapshot() {
     useEffect(() => {
         const fetchSnapshot = async () => {
             try {
-                const baseUrl = `http://${window.location.hostname}:8003`;
+                const baseUrl = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8004`;
                 const res = await fetch(`${baseUrl}/snapshot/${id}`);
                 if (res.ok) {
                     const data = await res.json();

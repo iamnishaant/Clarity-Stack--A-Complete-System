@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
-const API_BASE = 'http://localhost:8002';
+// SRS Intelligence service (port 8001) — serves /api/upload, /api/documents, etc.
+const API_BASE = import.meta.env.VITE_SRS_API_URL || 'http://localhost:8001';
 
 // ────────────────────────────────────────────────────────────────────
 // TYPES (from real backend schemas)

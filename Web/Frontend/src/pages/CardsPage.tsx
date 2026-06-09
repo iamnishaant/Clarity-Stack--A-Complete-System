@@ -147,6 +147,18 @@ export default function CardsPage() {
     setChatsWithCards(p => p.map(ch => ({ ...ch, cards: ch.cards.map(c => c.id === id ? { ...c, isPinned: !c.isPinned } : c) })));
   };
 
+  const handleDeleteCard = async (id: string, e: any) => {
+    e.stopPropagation();
+    if (!window.confirm('Delete this card? This cannot be undone.')) return;
+    try {
+      await deleteTemporalCard(id);
+      setChatsWithCards(p => p.map(ch => ({ ...ch, cards: ch.cards.filter(c => c.id !== id) })).filter(ch => ch.cards.length > 0));
+      setCurrentCardIndex(0);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   try {
     if (!selectedProjectId) {
       return (

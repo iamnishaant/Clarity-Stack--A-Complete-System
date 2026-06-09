@@ -13,7 +13,7 @@ import seGrpSrs from '../srs_data/5_SE_grp__intelligence.json';
 import { generateDiagram } from '../joint-logic/promptEngine.js';
 import { extractGraphWithGroq, getJointShapeForCategory, parseDocumentViaBackend } from '../joint-logic/pureFrontendEngine.js';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8006';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8005';
 
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -428,7 +428,15 @@ const Dashboard = () => {
         };
 
         window.addEventListener('message', handleMessage);
-        
+
+        // Announce readiness to the ClarityStack parent (if embedded in an iframe)
+        // so it can hand off pending SRS context without a load-timing race.
+        try {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ type: 'UML_CLARITY_READY' }, '*');
+            }
+        } catch (e) { /* not embedded — standalone mode */ }
+
         // Restore canvas state from local storage on boot
         setTimeout(() => {
             if (canvasRef.current && canvasRef.current.loadGraph) {

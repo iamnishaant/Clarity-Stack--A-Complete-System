@@ -1,5 +1,5 @@
 import { useDocumentStore } from "@/store/documentStore";
-import { AlertTriangle, FileText, Upload, Zap, ArrowRight, Loader2, Sparkles, Play, CheckCircle2, Trash2 } from "lucide-react";
+import { AlertTriangle, FileText, Upload, Zap, ArrowRight, ArrowLeft, Loader2, Sparkles, Play, CheckCircle2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -267,6 +267,7 @@ function DocumentListView() {
 
 export default function Dashboard() {
   const { documents, fetchDocuments, isLoading } = useDocumentStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDocuments();
@@ -277,6 +278,17 @@ export default function Dashboard() {
   return (
     <div className="space-y-12">
       <ProcessingOverlay isVisible={isLoading} />
+
+      <div className="fixed top-4 left-4 z-40">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => navigate('/projects')}
+          className="bg-slate-900/60 backdrop-blur border border-slate-800 text-slate-300 hover:text-white"
+        >
+          <ArrowLeft className="w-4 h-4 mr-1.5" /> Back to Projects
+        </Button>
+      </div>
       
       {/* Always show LandingView content */}
       <LandingView />

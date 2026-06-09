@@ -1,14 +1,16 @@
-import { useEffect, useRef, useState } from "react";
-import { GitMerge, ExternalLink, RefreshCw, Wifi, WifiOff, Loader2 } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { GitMerge, ExternalLink, RefreshCw, Wifi, WifiOff, Loader2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MainLayout } from "@/components/layout/MainLayout";
 
-const UML_SERVICE_URL = "http://localhost:5175";
+const UML_SERVICE_URL = "http://localhost:8007";
 
 type ConnectionStatus = "checking" | "online" | "offline";
 
 export default function UMLDashboard() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const navigate = useNavigate();
   const [status, setStatus] = useState<ConnectionStatus>("checking");
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -35,24 +37,35 @@ export default function UMLDashboard() {
     return () => clearInterval(interval);
   }, [refreshKey]);
 
-  const handleIframeLoad = () => {
+  // Hand off any pending SRS context to the embedded UML app.
+  // Called from BOTH iframe onLoad and the child's "ready" signal — whichever
+  // fires first wins; the other no-ops because sessionStorage is cleared after send.
+  // This avoids the race where onLoad posts before the UML app's message listener exists.
+  const sendSrsContext = useCallback(() => {
     const srsContext = sessionStorage.getItem('uml_srs_context');
-    if (srsContext && iframeRef.current?.contentWindow) {
-      try {
-        const payload = JSON.parse(srsContext);
-        if (Date.now() - payload.timestamp < 3600000) { // 1 hour max
-          iframeRef.current.contentWindow.postMessage({
-            type: 'SRS_CONTEXT',
-            payload
-          }, '*');
-          // Clear it so it doesn't get resent continuously on manual reloads
-          sessionStorage.removeItem('uml_srs_context');
-        }
-      } catch (e) {
-        console.error("Failed to parse uml_srs_context", e);
+    if (!srsContext || !iframeRef.current?.contentWindow) return;
+    try {
+      const payload = JSON.parse(srsContext);
+      if (Date.now() - payload.timestamp < 3600000) { // 1 hour max
+        iframeRef.current.contentWindow.postMessage({ type: 'SRS_CONTEXT', payload }, '*');
+        // Clear it so it doesn't get resent on manual reloads
+        sessionStorage.removeItem('uml_srs_context');
       }
+    } catch (e) {
+      console.error("Failed to parse uml_srs_context", e);
     }
-  };
+  }, []);
+
+  // The UML app posts UML_CLARITY_READY once its message listener is mounted.
+  useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'UML_CLARITY_READY') sendSrsContext();
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, [sendSrsContext]);
+
+  const handleIframeLoad = () => sendSrsContext();
 
   const handleRefresh = () => {
     setStatus("checking");
@@ -68,6 +81,15 @@ export default function UMLDashboard() {
         {/* ── Header Bar ── */}
         <div className="flex items-center justify-between px-6 py-3 border-b border-glass/50 shrink-0 bg-background/60 backdrop-blur-md">
           <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/projects")}
+              className="text-muted-foreground hover:text-foreground -ml-2 mr-1"
+              title="Back to Projects"
+            >
+              <ArrowLeft className="w-4 h-4 mr-1.5" /> Back
+            </Button>
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 via-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
               <GitMerge className="w-4 h-4 text-white" />
             </div>

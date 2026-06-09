@@ -144,7 +144,7 @@ export default function DiscoveryPage() {
             ) : (
               <div className="space-y-4">
                 {feed.map((item) => {
-                  const proj = allProjects.find(p => p.id === item.projectId);
+                  const proj = publicProjects.find(p => p.id === item.projectId);
                   return (
                     <div key={item._id} className="bg-card/50 border border-border rounded-xl p-5 hover:border-neon-cyan/30 transition-all">
                       <div className="flex justify-between items-center mb-3">

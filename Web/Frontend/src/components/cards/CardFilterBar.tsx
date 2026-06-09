@@ -9,7 +9,7 @@ const filterButtons: { type: CardType | null; label: string; icon: typeof Filter
   { type: 'decision', label: 'Decision', icon: CheckCircle },
   { type: 'insight', label: 'Insight', icon: Lightbulb },
   { type: 'action', label: 'Action', icon: FileText },
-  { type: 'reference', label: 'Reference', icon: Code },
+  { type: 'architecture', label: 'Architecture', icon: Code },
   { type: 'risk', label: 'Risk', icon: AlertTriangle },
   { type: 'unknown', label: 'Unknown', icon: HelpCircle },
 ];

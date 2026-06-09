@@ -7,7 +7,7 @@ const getSafeStorage = (key: string): string | null => {
   }
 };
 
-const SRS_API_BASE_URL = (import.meta.env.VITE_SRS_API_URL as string) || getSafeStorage('cs_api_url') || 'http://localhost:8002';
+const SRS_API_BASE_URL = (import.meta.env.VITE_SRS_API_URL as string) || getSafeStorage('cs_api_url') || 'http://localhost:8001';
 const SATELLITE_BASE_URL = `${(import.meta.env.VITE_SATELLITE_URL as string) || 'http://localhost:8003'}/api/satellite`;
 import { api } from "./http";
 
@@ -270,24 +270,6 @@ const mockMessages: Record<string, Message[]> = {
     },
   ],
 };
-
-/* ===================== API CORE ===================== */
-
-async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options?.headers,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`API Error: ${response.status} ${response.statusText}`);
-  }
-
-  return response.json();
-}
 
 /* ===================== PROJECTS ===================== */
 
@@ -754,7 +736,7 @@ export async function deleteTemporalCard(cardId: string) {
 export async function editCard(
   projectId: string,
   cardId: string,
-  payload: { title: string; summary: string }
+  payload: { title: string; summary: string; version?: number }
 ) {
   return fetchSatellite<any>(`/cards/${projectId}/${cardId}/edit`, {
     method: "PUT",
@@ -797,7 +779,7 @@ export async function getDiscoveryFeed() {
 }
 
 // -- Collaborative Editor API --
-const EDITOR_BASE_URL = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8003`;
+const EDITOR_BASE_URL = import.meta.env.VITE_EDITOR_BACKEND_URL || `http://${window.location.hostname}:8004`;
 
 export async function createEditorWorkspace(name: string, sections?: any[]) {
   const token = localStorage.getItem('token');
