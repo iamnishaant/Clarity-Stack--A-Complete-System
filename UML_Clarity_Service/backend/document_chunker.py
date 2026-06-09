@@ -224,7 +224,9 @@ def get_chunks(doc_id: str, processed_root: Path) -> list[dict]:
     Main entry point: given a doc_id, find its _clean.md and return chunks.
     Falls back to page-based chunking if no Markdown headings are found.
     """
-    stage3_dir = processed_root / "stage3_cleaned_md"
+    # Canonical cleaned-markdown dir — must match where the pipeline / upload_readme
+    # actually write (api.py get_stage3_content reads the same "Stage_3_Clean_md").
+    stage3_dir = processed_root / "Stage_3_Clean_md"
     candidates = list(stage3_dir.glob(f"{doc_id}*_clean.md"))
     if not candidates:
         # Try without numeric prefix
