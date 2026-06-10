@@ -21,37 +21,6 @@ app = FastAPI()
 
 from fastapi.middleware.cors import CORSMiddleware
 
-origins = [
-    "http://localhost:8000",
-    "http://localhost:8001",
-    "http://localhost:8002",
-    "http://localhost:8003",
-    "http://localhost:8004",
-    "http://localhost:8005",
-    "http://localhost:8006",
-    "http://localhost:8007",
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://127.0.0.1:8000",
-    "http://127.0.0.1:8001",
-    "http://127.0.0.1:8002",
-    "http://127.0.0.1:8003",
-    "http://127.0.0.1:8004",
-    "http://127.0.0.1:8005",
-    "http://127.0.0.1:8006",
-    "http://127.0.0.1:8007",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:5173",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,          # OR ["*"] if you prefer
-    allow_credentials=True,
-    allow_methods=["*"],            # <-- IMPORTANT
-    allow_headers=["*"],            # <-- IMPORTANT
-)
-
 from database import engine
 from models import Base
 
@@ -1319,3 +1288,37 @@ def get_reasoning(chat_id: str, db: Session = Depends(get_db)):
         "others": data.get("others", []),
         "edges": data.get("edges", []),
     })
+
+
+# Register CORSMiddleware at the end of the file so it executes first,
+# avoiding the Starlette BaseHTTPMiddleware CORS preflight bug.
+origins = [
+    "http://localhost:8000",
+    "http://localhost:8001",
+    "http://localhost:8002",
+    "http://localhost:8003",
+    "http://localhost:8004",
+    "http://localhost:8005",
+    "http://localhost:8006",
+    "http://localhost:8007",
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:8001",
+    "http://127.0.0.1:8002",
+    "http://127.0.0.1:8003",
+    "http://127.0.0.1:8004",
+    "http://127.0.0.1:8005",
+    "http://127.0.0.1:8006",
+    "http://127.0.0.1:8007",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)

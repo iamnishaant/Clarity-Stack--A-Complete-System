@@ -31,6 +31,7 @@ import EditorSnapshot from "./pages/editor/Snapshot";
 // UML-Clarity Pages
 import UMLDashboard from "./pages/uml/Dashboard";
 
+import { WalkthroughEngine } from "@/components/walkthrough/WalkthroughEngine";
 import { useEffect } from "react";
 import { applyAccentColor } from "@/lib/utils";
 
@@ -57,8 +58,9 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
+          <WalkthroughEngine />
+          <Routes>
+            <Route path="/" element={<Index />} />
           <Route path="/login"  element={<Login />} />
           <Route path="/register" element={<Register />} />
   

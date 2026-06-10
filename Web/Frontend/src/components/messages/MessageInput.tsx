@@ -53,7 +53,7 @@ export function MessageInput({ onSubmit, isLoading }: MessageInputProps) {
     <form onSubmit={handleSubmit} className="glass-panel p-4 space-y-3">
       <div className="flex gap-3">
         <Select value={role} onValueChange={setRole}>
-          <SelectTrigger className="w-36 bg-muted/50 border-glass">
+          <SelectTrigger data-tour="model-selector" className="w-36 bg-muted/50 border-glass">
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="glass-panel border-glass">
@@ -71,6 +71,7 @@ export function MessageInput({ onSubmit, isLoading }: MessageInputProps) {
         <Input
           placeholder="Sender name..."
           value={sender}
+          data-tour="signal-level"
           onChange={(e) => setSender(e.target.value)}
           className="flex-1 bg-muted/50 border-glass focus:border-primary"
         />
@@ -78,7 +79,7 @@ export function MessageInput({ onSubmit, isLoading }: MessageInputProps) {
 
       <div className="flex gap-3">
         {/* relative wrapper */}
-        <div className="relative flex-1">
+        <div data-tour="prompt-input" className="relative flex-1">
           <Textarea
             placeholder="Type your message... (Shift+Enter for new line)"
             value={text}

@@ -87,13 +87,12 @@ export function CreateChatModal({ isOpen, onClose, onSubmit, isLoading }: Create
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           {/* Title */}
-          <div className="space-y-2">
-            <Label htmlFor="chat-title">Chat Title</Label>
+          <div className="space-y-1">
+            <Label htmlFor="chat-title" className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Chat Title</Label>
             <Input
               id="chat-title"
-              placeholder="Enter chat title..."
+              placeholder="e.g. Sprint 1 Class Design Review, Slack Logs Import *"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="bg-muted/50 border-glass focus:border-primary"
@@ -102,15 +101,15 @@ export function CreateChatModal({ isOpen, onClose, onSubmit, isLoading }: Create
           </div>
 
           {/* Source Type */}
-          <div className="space-y-2">
-            <Label>Source Type</Label>
+          <div className="space-y-1">
+            <Label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Source Type</Label>
             <Select value={sourceType} onValueChange={setSourceType}>
               <SelectTrigger className="bg-muted/50 border-glass focus:border-primary">
                 <SelectValue placeholder="Select source type" />
               </SelectTrigger>
               <SelectContent className="glass-panel border-glass">
                 {sourceTypes.map((type) => (
-                  <SelectItem key={type.value} value={type.value}>
+                   <SelectItem key={type.value} value={type.value}>
                     {type.label}
                   </SelectItem>
                 ))}
@@ -119,40 +118,49 @@ export function CreateChatModal({ isOpen, onClose, onSubmit, isLoading }: Create
           </div>
 
           {/* 📌 NEW — Chat Context */}
-          <div className="space-y-2">
-            <Label>Purpose</Label>
+          <div className="space-y-1">
+            <Label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Purpose</Label>
             <Input
-              placeholder="Why does this chat exist?"
+              placeholder="e.g. Aligning on database schema migration and UML Class boundaries"
               value={purpose}
               onChange={(e) => setPurpose(e.target.value)}
               className="bg-muted/50 border-glass"
             />
+            <p className="text-[10px] text-slate-400/60 italic mt-0.5">
+              💡 Helps the synthesis engine isolate active architecture decisions and flag blockers.
+            </p>
           </div>
 
-          <div className="space-y-2">
-            <Label>Phase</Label>
+          <div className="space-y-1">
+            <Label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Phase</Label>
             <Input
-              placeholder="e.g. Data Cleaning, Research, Planning"
+              placeholder="e.g. Design, Research, Planning, Retrospective"
               value={phase}
               onChange={(e) => setPhase(e.target.value)}
               className="bg-muted/50 border-glass"
             />
+            <p className="text-[10px] text-slate-400/60 italic mt-0.5">
+              💡 Groups conversation timeline logs chronologically in your Delta drift history.
+            </p>
           </div>
 
-          <div className="space-y-2">
-            <Label>Description</Label>
+          <div className="space-y-1">
+            <Label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Description</Label>
             <Input
-              placeholder="Short explanation of what happens in this chat"
+              placeholder="e.g. Discussing the migration from PostgreSQL to MongoDB offline cluster"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="bg-muted/50 border-glass"
             />
+            <p className="text-[10px] text-slate-400/60 italic mt-0.5">
+              💡 Rich descriptions are parsed to generate learning checkpoints for Spaced Repetition cards.
+            </p>
           </div>
 
-          <div className="space-y-2">
-            <Label>Owner</Label>
+          <div className="space-y-1">
+            <Label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Owner</Label>
             <Input
-              placeholder="Who manages this chat?"
+              placeholder="e.g. alice@claritystack.io"
               value={owner}
               onChange={(e) => setOwner(e.target.value)}
               className="bg-muted/50 border-glass"

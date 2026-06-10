@@ -693,7 +693,7 @@ function KnowledgeInspector({
   const metrics = calculateMetrics();
 
   return (
-    <div className="fixed right-0 top-0 h-full w-[600px] bg-background/95 backdrop-blur-3xl border-l border-primary/20 z-[9999] shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+    <div data-tour="synthesis-pane" className="fixed right-0 top-0 h-full w-[600px] bg-background/95 backdrop-blur-3xl border-l border-primary/20 z-[9999] shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
 
       {/* HEADER: Decision Cockpit */}
       <div className="p-6 border-b border-white/10 bg-black/20">

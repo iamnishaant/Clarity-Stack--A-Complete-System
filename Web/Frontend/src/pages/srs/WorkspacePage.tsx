@@ -158,7 +158,7 @@ export function WorkspacePage() {
             {isReanalyzing ? 'Validating...' : 'Re-analyze Document'}
           </button>
 
-          <div className="flex items-center gap-4 border-l border-slate-800 pl-6">
+          <div data-tour="srs-actions" className="flex items-center gap-4 border-l border-slate-800 pl-6">
             {metrics.remaining === 0 && (
               <div className="hidden md:flex flex-col items-end text-right">
                 <p className="text-[11px] text-emerald-400 font-medium flex items-center gap-1"><CheckCircle2 className="w-3 h-3"/> 0 conflicts remaining</p>
@@ -192,7 +192,7 @@ export function WorkspacePage() {
       </header>
 
       {/* Split Pane */}
-      <div className="flex-1 flex overflow-hidden">
+      <div data-tour="srs-split-pane" className="flex-1 flex overflow-hidden">
         {metrics.remaining === 0 && metrics.total > 0 ? (
           <>
             {/* Left: Success summary + re-triage option */}

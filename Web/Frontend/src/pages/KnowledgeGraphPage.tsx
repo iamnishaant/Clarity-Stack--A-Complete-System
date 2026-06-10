@@ -589,7 +589,7 @@ export default function KnowledgeGraphPage() {
         <div className="flex gap-4 flex-1 min-h-0">
 
           {/* Graph canvas */}
-          <div ref={containerRef} className="flex-1 bg-background/50 border border-border rounded-xl relative overflow-hidden">
+          <div ref={containerRef} data-tour="kg-canvas" className="flex-1 bg-background/50 border border-border rounded-xl relative overflow-hidden">
             {isLoading ? (
               <div className="absolute inset-0 flex items-center justify-center">
                 <LoadingSpinner text="Loading graph…" />
@@ -682,7 +682,7 @@ export default function KnowledgeGraphPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="w-72 bg-card/40 border border-border rounded-xl p-4 flex flex-col gap-4 backdrop-blur-md overflow-y-auto">
+          <div data-tour="graph-controls" className="w-72 bg-card/40 border border-border rounded-xl p-4 flex flex-col gap-4 backdrop-blur-md overflow-y-auto">
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-2">

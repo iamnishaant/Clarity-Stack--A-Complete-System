@@ -100,7 +100,7 @@ export function getJointShapeForCategory(category, diagramType) {
 export async function parseDocumentViaBackend(file, onProgress) {
   // Try backend first (port 8001)
   try {
-    onProgress('📄 Connecting to parse server (port 8001)...');
+    onProgress('Connecting to parse server (port 8001)...');
     const formData = new FormData();
     formData.append('file', file);
 
@@ -116,14 +116,14 @@ export async function parseDocumentViaBackend(file, onProgress) {
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    onProgress(`✅ Backend extracted ${data.word_count} words from document`);
+    onProgress(`Backend extracted ${data.word_count} words from document`);
     return data.text;
 
   } catch (e) {
     // Backend offline or timed out — fall back to browser FileReader
     const isPdf = file.name.toLowerCase().endsWith('.pdf');
     if (isPdf) {
-      onProgress('⚠️ Parse backend offline. For PDFs please start: uvicorn main:app --port 8001');
+      onProgress('Parse backend offline. For PDFs please start: uvicorn main:app --port 8001');
       throw new Error(
         'PDF parsing requires the edituml backend.\n' +
         'Run: cd backend && uvicorn main:app --port 8001\n' +
@@ -132,12 +132,12 @@ export async function parseDocumentViaBackend(file, onProgress) {
     }
 
     // For .md/.txt files we can read directly in the browser
-    onProgress('📄 Reading document directly in browser (backend offline)...');
+    onProgress('Reading document directly in browser (backend offline)...');
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload  = (evt) => {
         const text = evt.target.result;
-        onProgress(`✅ Read ${text.split(' ').length} words locally`);
+        onProgress(`Read ${text.split(' ').length} words locally`);
         resolve(text);
       };
       reader.onerror = () => reject(new Error('Failed to read file in browser.'));
@@ -221,7 +221,7 @@ async function callGroq(messages, jsonMode = true) {
    Determine diagram type and extract a condensed semantic summary.
 ════════════════════════════════════════════════════════════════════════════ */
 async function classifyDocument(chunks, userPrompt, onProgress) {
-  onProgress('🔍 Phase 1/3 — Classifying document and diagram type...');
+  onProgress('Phase 1/3 — Classifying document and diagram type...');
 
   const excerpt = chunks.slice(0, 2).join('\n\n---\n\n').slice(0, 6000);
 
@@ -256,7 +256,7 @@ OUTPUT (strict JSON):
   ]);
 
   console.log('[Classifier]', result);
-  onProgress(`✅ Classified as "${result.diagram_type}" — ${result.system_name || 'System'}`);
+  onProgress(`Classified as "${result.diagram_type}" — ${result.system_name || 'System'}`);
   return result;
 }
 
@@ -265,7 +265,7 @@ OUTPUT (strict JSON):
    Extract all UML entities per chunk, then merge and deduplicate.
 ════════════════════════════════════════════════════════════════════════════ */
 async function extractEntities(chunks, classification, onProgress) {
-  onProgress('🧠 Phase 2/3 — Extracting UML entities from document...');
+  onProgress('Phase 2/3 — Extracting UML entities from document...');
 
   const chunkContext = chunks.slice(0, 3).join('\n\n---\n\n').slice(0, 8000);
 
@@ -316,7 +316,7 @@ OUTPUT (strict JSON):
 
   const entities = result.entities || [];
   console.log(`[Extractor] ${entities.length} entities extracted`);
-  onProgress(`✅ Extracted ${entities.length} UML entities`);
+  onProgress(`Extracted ${entities.length} UML entities`);
   return entities;
 }
 
@@ -325,7 +325,7 @@ OUTPUT (strict JSON):
    Extract connections between entities as human-readable instructions.
 ════════════════════════════════════════════════════════════════════════════ */
 async function extractRelationships(entities, classification, onProgress) {
-  onProgress('🔗 Phase 3/3 — Mapping relationships and connections...');
+  onProgress('Phase 3/3 — Mapping relationships and connections...');
 
   const entityList = entities
     .map(e => `  ${e.id}: "${e.label}" [${e.category}]`)
@@ -365,7 +365,7 @@ OUTPUT (strict JSON):
 
   const connections = result.connections || [];
   console.log(`[Relations] ${connections.length} connections mapped`);
-  onProgress(`✅ ${connections.length} relationships mapped`);
+  onProgress(`${connections.length} relationships mapped`);
   return connections;
 }
 
@@ -375,7 +375,7 @@ OUTPUT (strict JSON):
    with UML-standard-compliant shape types.
 ════════════════════════════════════════════════════════════════════════════ */
 export async function extractGraphWithGroq(userPrompt, documentText, onProgress) {
-  onProgress('🚀 Starting AI semantic analysis pipeline...');
+  onProgress('Starting AI semantic analysis pipeline...');
 
   if (!documentText || documentText.trim().length < 50) {
     throw new Error('Document is too short or empty. Please provide a meaningful SRS document.');
@@ -395,7 +395,7 @@ export async function extractGraphWithGroq(userPrompt, documentText, onProgress)
   const rawConnections = await extractRelationships(rawEntities, classification, onProgress);
 
   // ── UML Standard Cross-Check ──────────────────────────────────────────────
-  onProgress('✅ Cross-checking entities against UML standards...');
+  onProgress('Cross-checking entities against UML standards...');
 
   const nodes = rawEntities.map((e, i) => {
     const jointType = getJointShapeForCategory(e.category, classification.diagram_type);

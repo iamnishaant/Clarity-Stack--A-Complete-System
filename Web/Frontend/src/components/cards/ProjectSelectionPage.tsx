@@ -152,7 +152,7 @@ export function ProjectSelectionPage({
       </div>
 
       {/* Floating Project Blocks Grid */}
-      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-min">
+      <div data-tour="global-cards-grid" className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-min">
         {projects.map((project, index) => {
           const floatAnim = floatAnimations[project.id] || {
             duration: 5,

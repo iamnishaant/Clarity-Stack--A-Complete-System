@@ -15,13 +15,8 @@ if /i "%confirm%" neq "y" exit
 echo.
 echo Terminating processes...
 
-:: Function to kill process by port (8000-8007)
-for %%p in (8000 8001 8002 8003 8004 8005 8006 8007) do (
-    for /f "tokens=5" %%a in ('netstat -aon ^| findstr :%%p ^| findstr LISTENING') do (
-        echo Killing process on port %%p (PID: %%a)...
-        taskkill /F /PID %%a /T
-    )
-)
+:: Kill processes by ports using a bulletproof PowerShell command
+powershell -Command "Get-NetTCPConnection -LocalPort 8000,8001,8002,8003,8004,8005,8006,8007 -ErrorAction SilentlyContinue | ForEach-Object { if ($_.OwningProcess) { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue } }"
 
 echo.
 echo ===================================================

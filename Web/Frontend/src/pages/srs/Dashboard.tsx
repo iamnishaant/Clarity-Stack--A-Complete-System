@@ -107,7 +107,7 @@ function LandingView() {
       </div>
 
       {/* Upload CTA */}
-      <div className="glass-card p-8 text-center border-primary/20 glow-primary">
+      <div data-tour="srs-uploader" className="glass-card p-8 text-center border-primary/20 glow-primary">
         <div className="w-14 h-14 rounded-2xl gradient-primary flex items-center justify-center mx-auto mb-4 glow-primary">
           {isLoading ? <Loader2 className="w-6 h-6 text-primary-foreground animate-spin" /> : <Play className="w-6 h-6 text-primary-foreground ml-0.5" />}
         </div>
@@ -193,7 +193,7 @@ function DocumentListView() {
       )}
 
       {/* Document list */}
-      <div className="space-y-3 relative">
+      <div data-tour="srs-doc-list" className="space-y-3 relative">
         {documents.map(doc => (
           <div key={doc.doc_id}
             id={`doc-${doc.doc_id}`}

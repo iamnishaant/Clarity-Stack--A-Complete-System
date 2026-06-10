@@ -16,7 +16,7 @@ export function Sidebar() {
   const location = useLocation();
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 glass-panel border-r border-glass flex flex-col z-50">
+    <aside data-tour="sidebar" className="fixed left-0 top-0 h-screen w-64 glass-panel border-r border-glass flex flex-col z-50">
       {/* Logo */}
       <div className="p-6 border-b border-glass/50">
         <NavLink to="/" className="flex items-center gap-3 group">

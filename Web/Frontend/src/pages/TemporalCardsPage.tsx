@@ -340,7 +340,7 @@ export default function TemporalCardsPage() {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div data-tour="cards-deck" className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {cards.map((card) => {
               const isExpanded = expandedCard === card._id;
               const labelStyle = LABEL_BADGE[card.label] || LABEL_BADGE.general;

@@ -47,36 +47,65 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, isLoading }: Pro
           <DialogTitle className="gradient-text">Create New Project</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4">
-          <Input
-            placeholder="Project Name *"
-            value={name}
-            onChange={e => setName(e.target.value)}
-          />
+        <div className="space-y-5">
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Project Name</label>
+            <Input
+              placeholder="e.g. AI Research Platform, Clarity Hub *"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              className="bg-slate-900/50 border-white/10"
+            />
+          </div>
 
-          <Textarea
-            placeholder="Project Purpose — why does this exist? *"
-            value={purpose}
-            onChange={e => setPurpose(e.target.value)}
-          />
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Project Purpose</label>
+            <Textarea
+              placeholder="e.g. To index core architectural decisions, microservice logs, and timeline specifications for the engineering team *"
+              value={purpose}
+              onChange={e => setPurpose(e.target.value)}
+              className="bg-slate-900/50 border-white/10 min-h-[70px]"
+            />
+            <p className="text-[10px] text-muted-foreground/70 italic mt-0.5">
+              💡 ClarityStack's NLP parser uses this to filter chat noise and build entity nodes in the Knowledge Graph.
+            </p>
+          </div>
 
-          <Textarea
-            placeholder="Success Criteria — what does good look like? *"
-            value={success}
-            onChange={e => setSuccess(e.target.value)}
-          />
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Success Criteria</label>
+            <Textarea
+              placeholder="e.g. 100% compliance score on SRS documents, zero critical ambiguities, and complete PlantUML mapping *"
+              value={success}
+              onChange={e => setSuccess(e.target.value)}
+              className="bg-slate-900/50 border-white/10 min-h-[70px]"
+            />
+            <p className="text-[10px] text-muted-foreground/70 italic mt-0.5">
+              💡 The SRS Intelligence Engine audits your requirements directly against these criteria.
+            </p>
+          </div>
 
-          <Textarea
-            placeholder="Constraints — risks, limits, assumptions *"
-            value={constraints}
-            onChange={e => setConstraints(e.target.value)}
-          />
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Constraints</label>
+            <Textarea
+              placeholder="e.g. Must run offline locally on port 8000, rely on local SQLite, and avoid external API dependencies *"
+              value={constraints}
+              onChange={e => setConstraints(e.target.value)}
+              className="bg-slate-900/50 border-white/10 min-h-[70px]"
+            />
+            <p className="text-[10px] text-muted-foreground/70 italic mt-0.5">
+              💡 Key constraints are automatically analyzed by ThreatLens to flag potential security and integration risks.
+            </p>
+          </div>
 
-          <Input
-            placeholder="Owner (optional)"
-            value={owner}
-            onChange={e => setOwner(e.target.value)}
-          />
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Owner (Optional)</label>
+            <Input
+              placeholder="e.g. jayden@claritystack.io"
+              value={owner}
+              onChange={e => setOwner(e.target.value)}
+              className="bg-slate-900/50 border-white/10"
+            />
+          </div>
 
           <div className="space-y-2">
             <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Visibility</label>

@@ -109,7 +109,7 @@ export default function ProjectsPage() {
             Manage your knowledge projects and chat histories.
           </p>
         </div>
-        <Button variant="outline" className="border-purple-500/50 hover:bg-purple-600/20" onClick={() => window.location.href = '/projects/search'}>
+        <Button variant="outline" data-tour="discover-projects" className="border-purple-500/50 hover:bg-purple-600/20" onClick={() => window.location.href = '/projects/search'}>
           <Search className="w-4 h-4 mr-2" />
           Discover Projects
         </Button>
@@ -126,7 +126,7 @@ export default function ProjectsPage() {
           title="No projects yet"
           description="Create your first project to start organizing your knowledge."
           action={
-            <Button variant="neon" onClick={() => setIsModalOpen(true)}>
+            <Button variant="neon" data-tour="new-project" onClick={() => setIsModalOpen(true)}>
               <Plus className="w-4 h-4" />
               Create Project
             </Button>
@@ -134,8 +134,10 @@ export default function ProjectsPage() {
         />
       ) : (
         <div className="space-y-4">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+          {projects.map((project, idx) => (
+            <div key={project.id} data-tour={idx === 0 ? "project-card" : undefined}>
+              <ProjectCard project={project} />
+            </div>
           ))}
         </div>
       )}
@@ -145,6 +147,7 @@ export default function ProjectsPage() {
         <Button
           variant="default"
           size="lg"
+          data-tour="new-project"
           className="fixed bottom-8 right-8 shadow-2xl shadow-primary/30 animate-glow"
           onClick={() => setIsModalOpen(true)}
         >

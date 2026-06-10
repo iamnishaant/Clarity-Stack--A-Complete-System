@@ -30,7 +30,7 @@ export const UML_STANDARDS = {
             actor:      { jointType: 'uml.Actor',          icon: '🧍', color: '#3b82f6' },
             use_case:   { jointType: 'uml.UseCase',         icon: '🔵', color: '#7c3aed' },
             system:     { jointType: 'uml.SystemBoundary',  icon: '🔲', color: '#0284c7' },
-            note:       { jointType: 'uml.Note',            icon: '📝', color: '#ca8a04' },
+            note:       { jointType: 'uml.Note',            icon: '', color: '#ca8a04' },
             constraint: { jointType: 'uml.Constraint',      icon: '📐', color: '#2563eb' },
         },
         guidance: `
@@ -54,7 +54,7 @@ export const UML_STANDARDS = {
             action:     { jointType: 'uml.ActionState',  icon: '🟩', color: '#16a34a' },
             decision:   { jointType: 'uml.DecisionNode', icon: '🔶', color: '#d97706' },
             end:        { jointType: 'uml.EndState',     icon: '🔴', color: '#dc2626' },
-            note:       { jointType: 'uml.Note',         icon: '📝', color: '#ca8a04' },
+            note:       { jointType: 'uml.Note',         icon: '', color: '#ca8a04' },
             constraint: { jointType: 'uml.Constraint',   icon: '📐', color: '#2563eb' },
         },
         guidance: `
@@ -72,8 +72,8 @@ export const UML_STANDARDS = {
         categoryMap: {
             external:   { jointType: 'dfd.ExternalEntity', icon: '📦', color: '#64748b' },
             process:    { jointType: 'dfd.Process',         icon: '🟩', color: '#16a34a' },
-            data_store: { jointType: 'dfd.DataStore',       icon: '🗄️', color: '#ea580c' },
-            note:       { jointType: 'uml.Note',            icon: '📝', color: '#ca8a04' },
+            data_store: { jointType: 'dfd.DataStore',       icon: '', color: '#ea580c' },
+            note:       { jointType: 'uml.Note',            icon: '', color: '#ca8a04' },
         },
         guidance: `
 ## Data Flow Diagram Rules (Gane-Sarson Standard)
@@ -87,7 +87,7 @@ export const UML_STANDARDS = {
         categories: ['lifeline', 'note'],
         categoryMap: {
             lifeline:   { jointType: 'standard.Rectangle', icon: '📋', color: '#6366f1' },
-            note:       { jointType: 'uml.Note',           icon: '📝', color: '#ca8a04' },
+            note:       { jointType: 'uml.Note',           icon: '', color: '#ca8a04' },
         },
         guidance: `
 ## Sequence Diagram Rules (UML 2.5 Standard)
@@ -101,7 +101,7 @@ export const UML_STANDARDS = {
         categoryMap: {
             class:     { jointType: 'standard.Rectangle', icon: '📋', color: '#6366f1' },
             interface: { jointType: 'standard.Rectangle', icon: '🔷', color: '#0ea5e9' },
-            note:      { jointType: 'uml.Note',           icon: '📝', color: '#ca8a04' },
+            note:      { jointType: 'uml.Note',           icon: '', color: '#ca8a04' },
         },
         guidance: `
 ## Class Diagram Rules (UML 2.5 Standard)
@@ -186,10 +186,10 @@ function buildChunkContext(chunks) {
 
         if (c.math && c.math.length > 0) {
             const mathStr = c.math.map(m => `  • [${m.type}] ${m.expression}`).join('\n');
-            text += `\n\n⚠️ MATHEMATICAL CONSTRAINTS (extract as "constraint" nodes):\n${mathStr}`;
+            text += `\n\nMATHEMATICAL CONSTRAINTS (extract as "constraint" nodes):\n${mathStr}`;
         }
         if (c.figures && c.figures.length > 0) {
-            text += `\n\n📊 FIGURE REFERENCES (extract as "note" nodes): ${c.figures.join(', ')}`;
+            text += `\n\nFIGURE REFERENCES (extract as "note" nodes): ${c.figures.join(', ')}`;
         }
         if (c.story_ids && c.story_ids.length > 0) {
             text += `\n\n🔖 Story IDs: ${c.story_ids.join(', ')}`;
@@ -275,7 +275,7 @@ ${categoryDocs}
 ${intelligenceData?.raw_text || intelligenceData?.summary || 'No summary available.'}
 
 ## SEMANTIC SRS CHUNKS
-${chunkContext ? chunkContext : '⚠️ No specific chunks provided. Extract entities from the DOCUMENT CONTEXT above.'}
+${chunkContext ? chunkContext : 'No specific chunks provided. Extract entities from the DOCUMENT CONTEXT above.'}
 `;
 }
 
@@ -339,7 +339,7 @@ function parseSemanticGraph(rawOutput, diagramType) {
     const entityIds = new Set(graph.entities.map(e => e.id));
     const invalidConns = graph.connections.filter(c => !entityIds.has(c.from) || !entityIds.has(c.to));
     if (invalidConns.length > 0) {
-        console.warn(`[PromptEngine] ⚠ ${invalidConns.length} connections reference invalid entity IDs. Removing.`);
+        console.warn(`[PromptEngine] ${invalidConns.length} connections reference invalid entity IDs. Removing.`);
         graph.connections = graph.connections.filter(c => entityIds.has(c.from) && entityIds.has(c.to));
     }
 
@@ -377,7 +377,7 @@ async function callNvidiaLLM(systemPrompt, userMessage) {
                 const data = await res.json();
                 const content = data.choices?.[0]?.message?.content || '';
                 const usage = data.usage || {};
-                console.log(`[PromptEngine] ✅ ${model} OK | tokens: prompt=${usage.prompt_tokens} completion=${usage.completion_tokens} | output=${content.length} chars`);
+                console.log(`[PromptEngine] ${model} OK | tokens: prompt=${usage.prompt_tokens} completion=${usage.completion_tokens} | output=${content.length} chars`);
                 return content;
             }
 
@@ -402,7 +402,7 @@ async function callNvidiaLLM(systemPrompt, userMessage) {
                 if (res2.ok) {
                     const data2 = await res2.json();
                     const content2 = data2.choices?.[0]?.message?.content || '';
-                    console.log(`[PromptEngine] ✅ ${model} (no json_mode) OK | output=${content2.length} chars`);
+                    console.log(`[PromptEngine] ${model} (no json_mode) OK | output=${content2.length} chars`);
                     return content2;
                 }
             }
@@ -435,7 +435,7 @@ async function callNvidiaLLM(systemPrompt, userMessage) {
 export async function generateDiagram(userPrompt, docId, intel, onProgress = () => {}) {
 
     // ── PASS 1: Classify ─────────────────────────────────────────────
-    onProgress('🔍 Classifying diagram type...');
+    onProgress('Classifying diagram type...');
     const diagramType = classifyDiagramType(userPrompt);
     console.log(`[PromptEngine] ═══ PASS 1 ═══ Diagram type: "${diagramType.toUpperCase()}"`);
 
@@ -447,18 +447,18 @@ export async function generateDiagram(userPrompt, docId, intel, onProgress = () 
     if (chunkContext) {
         console.log(`[PromptEngine] ✓ Chunk context ready (${chunkContext.length} chars)`);
     } else {
-        console.warn('[PromptEngine] ⚠ No chunk context — falling back to intelligence.json only');
+        console.warn('[PromptEngine] No chunk context — falling back to intelligence.json only');
     }
 
     // ── PASS 2: LLM Call ─────────────────────────────────────────────
-    onProgress('🧠 Generating semantic entities...');
+    onProgress('Generating semantic entities...');
     const systemPrompt = buildSystemPrompt(diagramType, chunkContext, intel);
     console.log(`[PromptEngine] ═══ PASS 2 ═══ System prompt: ${systemPrompt.length} chars`);
 
     const rawOutput = await callNvidiaLLM(systemPrompt, userPrompt);
 
     // ── PASS 3: Parse & Validate ─────────────────────────────────────
-    onProgress('✅ Parsing and validating semantic graph...');
+    onProgress('Parsing and validating semantic graph...');
     console.log('[PromptEngine] ═══ PASS 3 ═══ Parsing output...');
     const graph = parseSemanticGraph(rawOutput, diagramType);
 
@@ -476,12 +476,12 @@ export async function generateDiagram(userPrompt, docId, intel, onProgress = () 
  * Offline fallback — no chunk retrieval, uses intelligence.json only.
  */
 export async function generateDiagramOffline(userPrompt, intel, onProgress = () => {}) {
-    onProgress('🧠 Generating semantic graph (offline mode)...');
+    onProgress('Generating semantic graph (offline mode)...');
     const diagramType = classifyDiagramType(userPrompt);
     console.log(`[PromptEngine] OFFLINE mode — type: ${diagramType}`);
     const systemPrompt = buildSystemPrompt(diagramType, '', intel);
     const rawOutput = await callNvidiaLLM(systemPrompt, userPrompt);
-    onProgress('✅ Parsing...');
+    onProgress('Parsing...');
     const graph = parseSemanticGraph(rawOutput, diagramType);
     onProgress('');
     return { ...graph, diagramType };

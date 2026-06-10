@@ -21,7 +21,7 @@ export default function UMLDashboard() {
     const probe = async () => {
       try {
         const res = await fetch(`${UML_SERVICE_URL}`, {
-          method: "HEAD",
+          method: "GET",
           mode: "no-cors", // Vite dev server — just checking reachability
           signal: AbortSignal.timeout(2000),
         });
@@ -158,6 +158,28 @@ export default function UMLDashboard() {
               </div>
               <p className="text-sm text-muted-foreground">Connecting to UML-Clarity…</p>
             </div>
+          )}
+
+          {status === "online" && (
+            <>
+              {/* Focused invisible walkthrough anchors for UML components */}
+              <div 
+                data-tour="uml-toolbox" 
+                className="absolute left-0 top-0 w-[184px] h-full pointer-events-none z-20"
+              />
+              <div 
+                data-tour="uml-toolbar" 
+                className="absolute left-[184px] top-0 right-0 h-[46px] pointer-events-none z-20"
+              />
+              <div 
+                data-tour="uml-ai-prompt" 
+                className="absolute left-[184px] top-[46px] right-0 h-[64px] pointer-events-none z-20"
+              />
+              <div 
+                data-tour="uml-canvas" 
+                className="absolute left-[184px] top-[110px] right-0 bottom-0 pointer-events-none z-20"
+              />
+            </>
           )}
 
           <iframe

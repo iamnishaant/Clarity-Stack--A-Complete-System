@@ -469,7 +469,7 @@ const handleCreateChat = async (
 
 {/* --- Satellite Service Navigation --- */}
 {project && (
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+  <div data-tour="satellite-tabs" className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
     <Link to={`/projects/${project.id}/kg`} className="glass-panel p-4 rounded-xl border border-neon-cyan/30 hover:border-neon-cyan transition-colors flex items-center gap-3 group">
       <div className="w-10 h-10 rounded-lg bg-neon-cyan/20 flex items-center justify-center group-hover:bg-neon-cyan/30 transition-colors">
         <span className="text-neon-cyan font-bold text-xl">⎈</span>
@@ -512,7 +512,7 @@ const handleCreateChat = async (
           title="No chats yet"
           description="Create your first chat to start recording conversations."
           action={
-            <Button variant="neon" onClick={() => setIsModalOpen(true)}>
+            <Button variant="neon" data-tour="import-chats" onClick={() => setIsModalOpen(true)}>
               <Plus className="w-4 h-4" />
               Create Chat
             </Button>
@@ -587,6 +587,7 @@ const handleCreateChat = async (
         <Button
           variant="default"
           size="lg"
+          data-tour="import-chats"
           className="fixed bottom-8 right-8 shadow-2xl shadow-primary/30 animate-glow"
           onClick={() => setIsModalOpen(true)}
         >

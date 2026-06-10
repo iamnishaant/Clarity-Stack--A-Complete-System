@@ -101,7 +101,7 @@ export default function DeltaTimelinePage() {
             <Button variant="neon" onClick={handleComputeDelta}>Compute First Delta</Button>
           </div>
         ) : (
-          <div className="relative pl-8 border-l-2 border-border/50 ml-4 space-y-10">
+          <div data-tour="delta-timeline" className="relative pl-8 border-l-2 border-border/50 ml-4 space-y-10">
             {deltas.map((delta, index) => {
               const isLatest = index === 0;
               const hasChanges = delta.totalAdded > 0 || delta.totalRemoved > 0;

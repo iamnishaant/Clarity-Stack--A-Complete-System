@@ -10,11 +10,11 @@ const CATEGORY_META = {
   actor:      { icon: '🧍', color: '#3b82f6', bg: '#dbeafe', label: 'Actors',           jointType: 'uml.Actor' },
   use_case:   { icon: '🔵', color: '#7c3aed', bg: '#ede9fe', label: 'Use Cases',         jointType: 'uml.UseCase' },
   process:    { icon: '🟩', color: '#16a34a', bg: '#dcfce7', label: 'Processes',         jointType: 'uml.ActionState' },
-  data_store: { icon: '🗄️', color: '#ea580c', bg: '#ffedd5', label: 'Data Stores',      jointType: 'dfd.DataStore' },
+  data_store: { icon: '', color: '#ea580c', bg: '#ffedd5', label: 'Data Stores',      jointType: 'dfd.DataStore' },
   system:     { icon: '🔲', color: '#0284c7', bg: '#e0f2fe', label: 'System Boundary',   jointType: 'uml.SystemBoundary' },
   external:   { icon: '📦', color: '#64748b', bg: '#f1f5f9', label: 'External Entities', jointType: 'dfd.ExternalEntity' },
   decision:   { icon: '🔶', color: '#d97706', bg: '#fef3c7', label: 'Decisions',         jointType: 'uml.DecisionNode' },
-  note:       { icon: '📝', color: '#ca8a04', bg: '#fefce8', label: 'Notes',             jointType: 'uml.Note' },
+  note:       { icon: '', color: '#ca8a04', bg: '#fefce8', label: 'Notes',             jointType: 'uml.Note' },
   constraint: { icon: '📐', color: '#2563eb', bg: '#eff6ff', label: 'Constraints',       jointType: 'uml.Constraint' },
   start:      { icon: '⚫', color: '#1e293b', bg: '#e2e8f0', label: 'Start Point',      jointType: 'uml.StartNode' },
   end:        { icon: '🔴', color: '#dc2626', bg: '#fee2e2', label: 'End State',        jointType: 'uml.EndState' },
@@ -280,7 +280,7 @@ export default function NodePanel({
                         const state = isConnected ? 'connected' : getCardState(instr, placedNodeIds);
 
                         const stateConfig = {
-                            connected: { dot: '✅', bg: isDark ? '#052e16' : '#f0fdf4', border: '#22c55e', text: isDark ? '#86efac' : '#15803d', cursor: 'default', opacity: 0.8 },
+                            connected: { dot: '', bg: isDark ? '#052e16' : '#f0fdf4', border: '#22c55e', text: isDark ? '#86efac' : '#15803d', cursor: 'default', opacity: 0.8 },
                             ready:     { dot: '🔥', bg: isDark ? '#2a1a05' : '#fffbeb', border: '#f59e0b', text: isDark ? '#fcd34d' : '#92400e', cursor: 'pointer', opacity: 1 },
                             locked:    { dot: '🔒', bg: isDark ? '#0f172a' : '#f8fafc', border: isDark ? '#1e293b' : '#e2e8f0', text: isDark ? '#475569' : '#94a3b8', cursor: 'not-allowed', opacity: 0.5 },
                         };

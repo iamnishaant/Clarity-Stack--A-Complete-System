@@ -416,7 +416,7 @@ const Dashboard = () => {
                     setSelectedSrs('None');
                     setParsingStatus(null);
                     setLoading(false);
-                    setDebugInfo(`✅ SRS imported (doc_id: ${data.doc_id}). Enter a prompt and click Generate to extract entities.`);
+                    setDebugInfo(`SRS imported (doc_id: ${data.doc_id}). Enter a prompt and click Generate to extract entities.`);
                     fetchLiveDocs();
                     fetchStage3Files();
                 } catch (err) {
@@ -576,7 +576,7 @@ const Dashboard = () => {
                 setSelectedSrs('None');
                 setParsingStatus(null);
                 setLoading(false);
-                setDebugInfo(`✅ Markdown loaded (doc_id: ${data.doc_id}). Enter a prompt and click Generate to extract entities.`);
+                setDebugInfo(`Markdown loaded (doc_id: ${data.doc_id}). Enter a prompt and click Generate to extract entities.`);
                 fetchLiveDocs();
                 fetchStage3Files();
             } catch (err) {
@@ -1013,11 +1013,11 @@ const Dashboard = () => {
         const activeIntelligence = SRS_SAMPLES[selectedSrs] || null;
 
         const steps = [
-            '🔍 Classifying diagram type...',
+            'Classifying diagram type...',
             '📦 Retrieving relevant SRS chunks...',
-            '🧠 Injecting context into LLM prompt...',
-            '✍️  Generating semantic entities & connections...',
-            '✅ Validating JointJS schema...',
+            'Injecting context into LLM prompt...',
+            ' Generating semantic entities & connections...',
+            'Validating JointJS schema...',
         ];
 
         let currentStep = 0;
@@ -1210,7 +1210,7 @@ const Dashboard = () => {
                             letterSpacing: '0.06em', textTransform: 'uppercase',
                             display: 'flex', justifyContent: 'space-between', alignItems: 'center'
                         }}>
-                            <span>🧠 AI Workspace</span>
+                            <span>AI Workspace</span>
                             <button 
                                 onClick={() => {
                                     const buildNodes = (data, diagType, rId) => {
@@ -1365,7 +1365,7 @@ const Dashboard = () => {
                     <Sep />
                     
                     <TBtn title="Auto-align nodes to prevent overlap" onClick={() => canvasRef.current && canvasRef.current.autoLayout()}>
-                        ✨ Auto-Align
+                        Auto-Align
                     </TBtn>
 
                     <Sep />
@@ -1772,19 +1772,19 @@ const Dashboard = () => {
                                                 fontSize: '11px', fontWeight: '700', cursor: 'pointer', marginBottom: '10px'
                                             }}
                                         >
-                                            🔍 Load Chunks from Backend
+                                            Load Chunks from Backend
                                         </button>
 
                                         {chunkPreview?.error && (
                                             <div style={{ padding: '10px', borderRadius: '8px', background: T.errBg, border: '1px solid ' + T.errBorder, fontSize: '11px', color: T.errText }}>
-                                                ⚠ {chunkPreview.error}
+                                                {chunkPreview.error}
                                             </div>
                                         )}
 
                                         {chunkPreview?.chunks && (
                                             <>
                                                 <div style={{ fontSize: '10px', color: T.textMuted, marginBottom: '8px' }}>
-                                                    ✅ {chunkPreview.total_chunks} chunks found
+                                                    {chunkPreview.total_chunks} chunks found
                                                 </div>
                                                 {chunkPreview.chunks.map((c, i) => (
                                                     <div key={i} style={{
