@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 # =========================================================
 # LOAD ENV
 # =========================================================
-load_dotenv()
+load_dotenv(override=True)
 
 GROQ_KEY = os.getenv("GROQ_API_KEY")
 NVIDIA_KEY = os.getenv("NVIDIA_API_KEY")

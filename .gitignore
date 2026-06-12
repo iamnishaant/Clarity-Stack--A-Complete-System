@@ -17,6 +17,9 @@ Thumbs.db
 **/env/
 **/.venv/
 **/node_modules/
+.env.*
+**/.env
+**/.env.*
 
 # --- Databases ---
 *.db
