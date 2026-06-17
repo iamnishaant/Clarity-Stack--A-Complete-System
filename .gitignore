@@ -25,6 +25,8 @@ Thumbs.db
 *.db
 *.sqlite3
 **/claritystack.db
+*.db-shm
+*.db-wal
 
 # --- Python ---
 __pycache__/

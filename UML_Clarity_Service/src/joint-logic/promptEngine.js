@@ -15,7 +15,6 @@
  */
 
 const BACKEND_URL  = import.meta.env.VITE_API_URL || 'http://localhost:8005';
-const NVIDIA_API_KEY = import.meta.env?.VITE_NVIDIA_API_KEY || '';
 
 const NVIDIA_MODELS = [
     'meta/llama-3.3-70b-instruct',   // Tier 1 — absolute best reasoning + context
